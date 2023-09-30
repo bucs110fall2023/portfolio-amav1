@@ -12,28 +12,26 @@ leonardo.color('blue')
 michelangelo.shape('turtle')
 leonardo.shape('turtle')
 
-michelangelo.up() 
+michelangelo.up()
 leonardo.up()
 michelangelo.goto(-100,20)
 leonardo.goto(-100,-20)
-race_1 = random.randrange(0, 300) 
-michelangelo.speed(2)
-leonardo.speed(2)
-michelangelo.forward(race_1) 
-leonardo.forward(race_1)
-window.delay(10)
-michelangelo.ht()
-leonardo.ht()
-michelangelo.goto(-100, 20)
-leonardo.goto(-100, -20)
-michelangelo.st()
-leonardo.st()
+x = random.randrange(1,10)
+y = random.randrange(1.10)
 
-race_2 = random.randrange(1,10)
+print(x)
+print(y)
 
-for race_2 in range(1, 10):
-    michelangelo.forward(race_2)
-    leonardo.forward(race_2)
+leonardo.forward(x)
+michelangelo.forward(y)
+
+for i in range(10):
+    x = random.randrange(1,10)
+    y=random.randrange(1.10)
+    leonardo.forward(x)
+    michelangelo.forward(y)
+michelangelo.goto(-100,20)
+leonardo.goto(-100,-20)
 
 window.exitonclick()
 
@@ -44,20 +42,31 @@ window.exitonclick()
 
 import pygame
 pygame.init()
-window = pygame.display.set_mode()
+while True:
+    for event in pygame.event.get():
+        pass
 
-for angle in ():
-    angle = 360/4
+    window=pygame.display.set_mode()
 
-radians = "math.radians"(angle * _)
+    num_sides=[3,4,6,20,100,360]
+    xpos=500
+    ypos=50
+    side_length=100
+    points=[]
 
-x = "xpos" + "side_length" * "math.cos"(radians)
+    for _ in(num_sides):
+        for i in range (_):
+            angle=360/_
+            radians=math.radians(angle*i)
+            x = xpos + side_length * math.cos(radians)
+            y = ypos + side_length * math.sin(radians)
+            points.append([x,y])
+        window.fill("Blue")
+        pygame.draw.polygon(window, "green", points)
+        pygame.display.flip()
+        pygame.time.wait(500)
+        points=[]
 
-y = "xpos" + "side_length" * "math.cos"(radians)
-
-points = [x, y], [x^1, y^1], [x^2, y^2]
-
-pygame.draw.polygon()
 
 
 
