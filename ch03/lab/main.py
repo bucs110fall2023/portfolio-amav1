@@ -1,72 +1,34 @@
-import turtle 
-import random
-
-#Part A
-window = turtle.Screen() 
-window.bgcolor('lightblue')
-
-michelangelo = turtle.Turtle() 
-leonardo = turtle.Turtle()
-michelangelo.color('orange')
-leonardo.color('blue')
-michelangelo.shape('turtle')
-leonardo.shape('turtle')
-
-michelangelo.up()
-leonardo.up()
-michelangelo.goto(-100,20)
-leonardo.goto(-100,-20)
-x = random.randrange(1,10)
-y = random.randrange(1.10)
-
-print(x)
-print(y)
-
-leonardo.forward(x)
-michelangelo.forward(y)
-
-for i in range(10):
-    x = random.randrange(1,10)
-    y=random.randrange(1.10)
-    leonardo.forward(x)
-    michelangelo.forward(y)
-michelangelo.goto(-100,20)
-leonardo.goto(-100,-20)
-
-window.exitonclick()
-
-## 5. Your PART A code goes here
-
-
-# PART B - complete part B here
-
 import pygame
-pygame.init()
+import random
+import math
+screen=pygame.display.set_mode([400, 400])
+screen_size_variable=pygame.display.get_window_size()
+width= screen_size_variable[0]
+height=screen_size_variable[1]
+print(width)
+print(height)
 while True:
     for event in pygame.event.get():
-        pass
 
-    window=pygame.display.set_mode()
-
-    num_sides=[3,4,6,20,100,360]
-    xpos=500
-    ypos=50
-    side_length=100
-    points=[]
-
-    for _ in(num_sides):
-        for i in range (_):
-            angle=360/_
-            radians=math.radians(angle*i)
-            x = xpos + side_length * math.cos(radians)
-            y = ypos + side_length * math.sin(radians)
-            points.append([x,y])
-        window.fill("Blue")
-        pygame.draw.polygon(window, "green", points)
+        screen.fill(pygame.Color("black"))
+        pygame.draw.circle(screen, "white", (200,200), 200)
+        pygame.draw.circle(screen, "red", (200,200), 200, 2)
+        pygame.draw.line(screen, "red", (200, 0), (200, height), 2)
+        pygame.draw.line(screen, "red", (height, 200), (0, width/2), 2)
         pygame.display.flip()
-        pygame.time.wait(500)
-        points=[]
+        pygame.time.wait(5000)
 
+    x2=(width/2)
+    y2=(height/2)
+    for i in range(10):
+        x1=random.randint(0, 400)
+        y1=random.randint(0, 400)
+        pygame.draw.circle(screen, "red", (x1, y1), 10)
+        distance_from_center = math.hypot(x1-x2, y1-y2) 
+        pygame.display.flip()
+        pygame.time.wait(5000)
+        is_in_circle = distance_from_center <= width/2 
+       
 
 
 
