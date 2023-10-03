@@ -1,6 +1,7 @@
 
 import turtle 
 import random
+import math
 
 #Part A
 window = turtle.Screen() 
@@ -17,24 +18,26 @@ michelangelo.up()
 leonardo.up()
 michelangelo.goto(-100,20)
 leonardo.goto(-100,-20)
-x = random.randrange(1,10)
-y = random.randrange(1.10)
 
-print(x)
-print(y)
+x=int(random.randrange(1,100))
+y=int(random.randrange(1,100))
+
+
 
 leonardo.forward(x)
 michelangelo.forward(y)
 
-for i in range(10):
+for _ in range(10):
     x = random.randrange(1,10)
-    y=random.randrange(1.10)
+    y = random.randrange(1.10)
     leonardo.forward(x)
     michelangelo.forward(y)
 michelangelo.goto(-100,20)
 leonardo.goto(-100,-20)
 
 window.exitonclick()
+
+## 5. Your PART A code goes here
 
 
 # PART B - complete part B here
