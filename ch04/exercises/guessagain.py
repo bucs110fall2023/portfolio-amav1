@@ -1,13 +1,8 @@
-import random
-input = int(input("Guess a number:"))
-answer = random.randint(1,10)
-while answer != input:
-    if input < answer:
-        print("Too low")
-        input = int(input("Enter another number:"))
-    elif input > answer:  
-        print("Too high!")
-        input = int(input("Enter number again:"))
-    else:
-        break
-print("You guessed right!!")
+print("Please spell your name:")
+name = ""
+ch = input("What is the first letter(leave empty when done)?")
+while ch:
+	name = name + ch
+	ch = input("What is the next letter(leave empty when done)?")
+print(name)
+

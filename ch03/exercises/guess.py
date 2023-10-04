@@ -1,16 +1,16 @@
 import random
-input = int(input("Guess a number:"))
 answer = random.randint(1,10)
-while answer != input:
-    if input < answer:
+
+for i in range(3):
+    guess = int(input("Guess a number:"))
+    if guess < answer:
         print("Too low")
-        input = int(input("Enter another number:"))
-    elif input > answer:  
+    elif guess > answer:  
         print("Too high!")
-        input = int(input("Enter number again:"))
     else:
+        print("You guessed right!! The number was", answer)
         break
-print("You guessed right!!")
+
 
 
 
