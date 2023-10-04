@@ -29,7 +29,7 @@ michelangelo.forward(y)
 
 for _ in range(10):
     x = random.randrange(1,10)
-    y = random.randrange(1.10)
+    y = random.randrange(1,10)
     leonardo.forward(x)
     michelangelo.forward(y)
 michelangelo.goto(-100,20)
