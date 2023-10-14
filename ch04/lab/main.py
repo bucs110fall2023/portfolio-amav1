@@ -1,68 +1,153 @@
 import pygame
-pygame.init()
 import random
 import math
-screen = pygame.display.set_mode([400,400])
-width, height = pygame.display.get_window_size()
-running = True
+import sys
+pygame.init()
+window= pygame.display.set_mode([500,500])
 
-while True:
+
+size= pygame.display.get_window_size()
+
+
+t=0
+
+
+width = size[0]
+x2 = width/2
+
+
+length = size[1]
+y2 = length/2
+player1= "red"
+player2= "blue"
+g=0
+h=0
+
+
+run = True
+font = pygame.font.SysFont(None, 48)
+text1 = font.render("Player 1 won!", True, "white")
+text2 = font.render("Player 2 won!", True, "white")
+text3 = font.render("It's a tie!", True, "white")
+text4= font.render("Click on who will win!", True, "White")
+text5= font.render("You bet right!", True, "White")
+text6= font.render("You bet wrong!", True, "White")
+
+
+result = []
+
+
+hit_box_width = width / 2
+
+
+hitboxes = {
+    "red": pygame.Rect(0, 0, hit_box_width, length),
+    "blue": pygame.Rect(0, 0, hit_box_width, length)
+}
+
+
+hitboxes["red"].left = hitboxes["blue"].right
+main_colors = {
+ "red": (200, 0, 0),
+ "blue": (0, 0, 200),
+}
+
+
+flag = 0
+
+
+while run:
+    for color in main_colors:
+                 for c, hb in hitboxes.items(): #reset boxes to main color
+                     pygame.draw.rect(window, main_colors[c], hb)
+                 pygame.draw.rect(window, main_colors[color], hitboxes[color])
+                 window.blit(text4, (60,100))
+                 pygame.display.flip()
+                 pygame.time.delay(2000)
+
+
     for event in pygame.event.get():
-
-        screen.fill(pygame.Color("black"))
-        pygame.draw.circle(screen, "white", (200,200), 200)
-        pygame.draw.circle(screen, "red", (200,200), 200, 2)
-        pygame.draw.line(screen, "red", (200, 0), (200, height), 2)
-        pygame.draw.line(screen, "red", (height, 200), (0, width/2), 2)
-        pygame.display.flip()
-        pygame.time.wait(2000)
-
-    x2 = width/2
-    y2 = height/2
-    pointblue = 0
-    pointred = 0
-    radius = 1
-    for i in range(10):
-        x1=random.randint(0, 400)
-        y1=random.randint(0, 400)
-        distance_center= math.hypot(x1-x2, y1-y2)
-        color1 = "blue" 
-        #if distance_center <= radius:
-        if distance_center <= x2:
-            color1 = "navyblue"
-        else:
-            pointblue += 1
-        pygame.draw.circle(screen, color1, (x1, y1), 10)
-        pygame.display.flip()
-        pygame.time.wait(2000)
-        is_in_circle = distance_center >= width/2
-        x1 = random.randint(0,400)
-        y1 = random.randint(0,400)
-        distance_center = math.hypot(x1-x2, y1-y2)
-        color2 = "red"
-        if distance_center <= x2: 
-            color2 = "maroon"
-        else:
-            pointred += 1
-        
-        pygame.draw.circle(screen, color2, (x1, y1), 10)
-        pygame.display.flip()
-        pygame.time.wait(5000)
-        is_in_circle = distance_center <= width/2
-    pygame.init()
-    pygame.font.init()
-    font = pygame.font.Font("Arial", 20)
-    text = font.render("text", True, "black")
-    screen.blit(screen, (50, -300)) 
-    if pointblue > pointred:
-            print ("Blue player wins!")
-    if pointred > pointblue:
-            print ("Red player wins!")
-    elif pointblue == pointred:
-            print ("It's a tie!")
-
-    
-    
-
- 
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
        
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            flag = 1
+            if hitboxes["red"].collidepoint(event.pos):
+                result.append("red")
+                t = 1
+            elif hitboxes["blue"].collidepoint(event.pos):
+                result.append("blue")
+                t = 2
+
+
+    if flag == 1:
+        window.fill('black')
+        pygame.draw.circle(window, "white", (size[0]/2,size[1]/2), size[0]/2)
+        pygame.draw.circle(window, "grey", (size[0]/2,size[1]/2), size[0]/2 - 10)
+        pygame.draw.line(window, "yellow", [250,0],[250,500])
+        pygame.draw.line(window, "yellow", [0,250],[500,250])
+
+        pygame.display.flip()
+        pygame.time.wait(500)
+
+
+        for i in range (0,10):
+            x= random.randrange(0, 500)
+            y= random.randrange(0, 500)
+
+
+
+
+            distance_from_center = math.hypot(x-x2, y-y2) #the distance formula
+            is_in_circle = distance_from_center <= width/2 #screen width
+            if is_in_circle:
+                pygame.draw.circle(window, player1, (x,y), 10)
+                g += 1
+            else:
+                pygame.draw.circle(window, "purple", (x,y), 10)
+            pygame.display.flip()
+            pygame.time.wait(1000)
+
+
+
+
+            x= random.randrange(0, 500)
+            y= random.randrange(0, 500)
+
+
+
+
+            distance_from_center = math.hypot(x-x2, y-y2) #the distance formula
+            is_in_circle = distance_from_center <= width/2 #screen width
+            if is_in_circle:
+                pygame.draw.circle(window, player2, (x,y), 10)
+                h += 1
+            else:
+                pygame.draw.circle(window, "green", (x,y), 10)
+            pygame.display.flip()
+            pygame.time.wait(2000)
+
+
+        if h>g:
+            window.blit(text2, (250,250))
+            pygame.display.flip()
+        elif g>h:
+            window.blit(text1, (250,250))
+
+            pygame.display.flip()
+        else:
+            window.blit(text3, (250, 250))
+            pygame.display.flip()
+            run = False
+
+
+    if t==1 and g>h:
+        window.blit(text5, (250,300))
+        pygame.display.flip()
+    elif t==2 and h>g:
+        window.blit(text5, (250,300))
+        pygame.display.flip()
+    else:
+        window.blit(text6, (250,300))
+        pygame.display.flip()
