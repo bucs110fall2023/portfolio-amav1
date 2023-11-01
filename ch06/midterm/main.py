@@ -5,6 +5,13 @@ import random
 winter_scene = turtle.Screen()
 winter_scene.bgcolor("skyblue")
 
+timeout_duration = 20000  
+
+def close_window():
+    turtle.bye()
+    return
+winter_scene.ontimer(close_window, timeout_duration)
+
 snowflake_turtle = turtle.Turtle()
 snowflake_turtle.speed(0)  
 
@@ -44,10 +51,19 @@ def main():
     draw_button.pack()
     root.mainloop()
 
+
+
+
+
 if __name__ == "__main__":
     main()
 
 
+
+
+
+
+    
 
 
 
