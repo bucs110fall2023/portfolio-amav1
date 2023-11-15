@@ -1,153 +1,81 @@
 import pygame
-import random
-import math
 import sys
-pygame.init()
-window= pygame.display.set_mode([500,500])
 
-
-size= pygame.display.get_window_size()
-
-
-t=0
-
-
-width = size[0]
-x2 = width/2
-
-
-length = size[1]
-y2 = length/2
-player1= "red"
-player2= "blue"
-g=0
-h=0
-
-
-run = True
-font = pygame.font.SysFont(None, 48)
-text1 = font.render("Player 1 won!", True, "white")
-text2 = font.render("Player 2 won!", True, "white")
-text3 = font.render("It's a tie!", True, "white")
-text4= font.render("Click on who will win!", True, "White")
-text5= font.render("You bet right!", True, "White")
-text6= font.render("You bet wrong!", True, "White")
-
-
-result = []
-
-
-hit_box_width = width / 2
-
-
-hitboxes = {
-    "red": pygame.Rect(0, 0, hit_box_width, length),
-    "blue": pygame.Rect(0, 0, hit_box_width, length)
-}
-
-
-hitboxes["red"].left = hitboxes["blue"].right
-main_colors = {
- "red": (200, 0, 0),
- "blue": (0, 0, 200),
-}
-
-
-flag = 0
-
-
-while run:
-    for color in main_colors:
-                 for c, hb in hitboxes.items(): #reset boxes to main color
-                     pygame.draw.rect(window, main_colors[c], hb)
-                 pygame.draw.rect(window, main_colors[color], hitboxes[color])
-                 window.blit(text4, (60,100))
-                 pygame.display.flip()
-                 pygame.time.delay(2000)
-
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-       
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            flag = 1
-            if hitboxes["red"].collidepoint(event.pos):
-                result.append("red")
-                t = 1
-            elif hitboxes["blue"].collidepoint(event.pos):
-                result.append("blue")
-                t = 2
-
-
-    if flag == 1:
-        window.fill('black')
-        pygame.draw.circle(window, "white", (size[0]/2,size[1]/2), size[0]/2)
-        pygame.draw.circle(window, "grey", (size[0]/2,size[1]/2), size[0]/2 - 10)
-        pygame.draw.line(window, "yellow", [250,0],[250,500])
-        pygame.draw.line(window, "yellow", [0,250],[500,250])
-
-        pygame.display.flip()
-        pygame.time.wait(500)
-
-
-        for i in range (0,10):
-            x= random.randrange(0, 500)
-            y= random.randrange(0, 500)
-
-
-
-
-            distance_from_center = math.hypot(x-x2, y-y2) #the distance formula
-            is_in_circle = distance_from_center <= width/2 #screen width
-            if is_in_circle:
-                pygame.draw.circle(window, player1, (x,y), 10)
-                g += 1
-            else:
-                pygame.draw.circle(window, "purple", (x,y), 10)
-            pygame.display.flip()
-            pygame.time.wait(1000)
-
-
-
-
-            x= random.randrange(0, 500)
-            y= random.randrange(0, 500)
-
-
-
-
-            distance_from_center = math.hypot(x-x2, y-y2) #the distance formula
-            is_in_circle = distance_from_center <= width/2 #screen width
-            if is_in_circle:
-                pygame.draw.circle(window, player2, (x,y), 10)
-                h += 1
-            else:
-                pygame.draw.circle(window, "green", (x,y), 10)
-            pygame.display.flip()
-            pygame.time.wait(2000)
-
-
-        if h>g:
-            window.blit(text2, (250,250))
-            pygame.display.flip()
-        elif g>h:
-            window.blit(text1, (250,250))
-
-            pygame.display.flip()
+def threenp1(n):
+    count = 0
+    while n > 1.0:
+        if n % 2 == 0:
+            n = int(n / 2)
         else:
-            window.blit(text3, (250, 250))
-            pygame.display.flip()
-            run = False
+            n = int(3 * n + 1)
+        count = count + 1
+    return count
 
+def threenp1range(upper_limit):
+    objs_in_seq = {}
+    start_value = 2
 
-    if t==1 and g>h:
-        window.blit(text5, (250,300))
+    for number in range(start_value, upper_limit + 1):
+        iters = threenp1(number)
+        objs_in_seq[number] = iters
+
+    return objs_in_seq
+
+def graph_coordinates(screen, data, x_scale, y_scale):
+    coords = []
+
+    for x, y in data.items():
+        x_pixel = x * x_scale
+        y_pixel = y * y_scale
+        coords.append((x_pixel, y_pixel))
+
+    if len(coords) >= 2:
+        pygame.draw.lines(screen, ("red"), False, coords, 2)
+
+def main():
+    pygame.init()
+
+    WINDOW_WIDTH = 800
+    WINDOW_LENGTH = 600
+    screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_LENGTH))
+
+    upper_limit = int(input("Enter the upper limit for the range (>=20): "))
+
+    if upper_limit < 20:
+        print("Upper limit should be at least 20.")
+        sys.exit()
+
+    results = threenp1range(upper_limit)
+    x_scale = WINDOW_WIDTH / upper_limit
+    y_scale = WINDOW_LENGTH / max(results.values())
+
+    running = True
+
+    max_iters_key = 0
+    max_iters_value = 0
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        screen.fill("light blue")
+
+        graph_coordinates(screen, results, x_scale, y_scale)
+
         pygame.display.flip()
-    elif t==2 and h>g:
-        window.blit(text5, (250,300))
+
+        font = pygame.font.Font(None, 36)
+        max_iters_key = max(results, key=results.get)
+        max_iters_value = results[max_iters_key]
+        message = f"Max Iterations: {max_iters_key} - {max_iters_value} iterations"
+        msg = font.render(message, True, ("Red"))
+        screen.blit(msg, (10, 10))
+
         pygame.display.flip()
-    else:
-        window.blit(text6, (250,300))
-        pygame.display.flip()
+
+    pygame.quit()
+    sys.exit()
+
+if __name__ == "__main__":
+    main()
