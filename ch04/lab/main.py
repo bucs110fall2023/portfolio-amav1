@@ -138,4 +138,8 @@ while run:
             pygame.display.flip()
         else:
             window.blit(wrong, (250,300))
+<<<<<<< HEAD
     pygame.display.flip()
+=======
+    pygame.display.flip()
+>>>>>>> 87b34754d8414abb8b2447cb001326196353dbd0
