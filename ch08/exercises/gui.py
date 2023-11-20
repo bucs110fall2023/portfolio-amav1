@@ -41,3 +41,4 @@ class question_block:
    self.is_vertical = True # Question_blocks move vertically onscreen only
    self.image = pygame.image.load ("question_block.jpg")
    self.image = pygame.image.load(img)
+
