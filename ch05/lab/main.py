@@ -24,12 +24,14 @@ def threenp1range(upper_limit):
 def graph_coordinates(screen, data, x_scale, y_scale):
     coords = []
 
+    WINDOW_LENGTH = 600
     for x, y in data.items():
         x_pixel = x * x_scale
-        y_pixel = y * y_scale
+        y_pixel =  WINDOW_LENGTH - y * y_scale
         coords.append((x_pixel, y_pixel))
 
     if len(coords) >= 2:
+        coords.reverse()
         pygame.draw.lines(screen, ("red"), False, coords, 2)
 
 def main():
