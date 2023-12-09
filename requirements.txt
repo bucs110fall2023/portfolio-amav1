@@ -2,3 +2,6 @@ pygame
 pygame-menu
 requests
 pytest
+requests
+Flask
+jsonify
