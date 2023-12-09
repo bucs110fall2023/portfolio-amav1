@@ -13,17 +13,13 @@ class CarbonAPI:
             response.raise_for_status()
             data = response.json()
             results = data.get('results')
-            if results:
-                return results
-            else:
-                return None
+            return results  
         except requests.exceptions.RequestException as e:
             print(f"Request failed: {e}")
             return None
 
 def validate_url(url):
-    
-    return True if url.startswith("http://") or url.startswith("https://") else False
+    return url.startswith("http://") or url.startswith("https://")
 
 @app.route('/get_carbon_results', methods=['GET'])
 def get_carbon_results():
@@ -34,7 +30,8 @@ def get_carbon_results():
     
     carbon_instance = CarbonAPI(user_url)
     results = carbon_instance.get()
-    if results:
+    
+    if results is not None:
         return jsonify({"results": results})
     else:
         return jsonify({"message": "No results found."}), 404
