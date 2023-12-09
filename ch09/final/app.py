@@ -1,7 +1,7 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import requests
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 class CarbonAPI: 
     def __init__(self, url):
@@ -20,6 +20,11 @@ class CarbonAPI:
 
 def validate_url(url):
     return url.startswith("http://") or url.startswith("https://")
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 
 @app.route('/get_carbon_results', methods=['GET'])
 def get_carbon_results():
