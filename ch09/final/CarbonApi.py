@@ -2,7 +2,7 @@ import requests
 
 class CarbonAPI: 
     def __init__(self, url):
-        self.api_url = url
+        self.api_url = 'https://api.websitecarbon.com/url/' + url  
     
     def get(self):
         try:
