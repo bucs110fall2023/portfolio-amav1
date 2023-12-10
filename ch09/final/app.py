@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, render_template
+from MealAPI import MealAPI, validate_ingredient
 import requests
 
 app = Flask(__name__, template_folder='templates')
