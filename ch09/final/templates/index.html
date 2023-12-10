@@ -38,7 +38,8 @@
             padding: 8px;
             margin-bottom: 20px;
             margin-top: 8px;
-            border-radius: 0%; 
+            border-radius: 4px;
+            border: 1px solid #ccc;
             
             
         }
@@ -56,14 +57,13 @@
 </head>
 <body>
     <h1>Carbon API</h1>
-    <form action="/get_carbon_results" method="GET">
+    <form action= "/get_carbon_results" method="GET">
         <label for="url_input">Enter URL:</label><br>
         <input type="text" id="url_input" name="url" placeholder="Enter URL here"><br><br>
         <input type="submit" value="Submit">
     </form>
     <h2> 
-        <img src="/templates/carbonfoot.jpeg" alt = Carbon footprint>
+        <img src="/templates/images/carbonfoot.jpg">
     </h2>
 </body>
 </html>
-

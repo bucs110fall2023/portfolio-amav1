@@ -1,31 +1,39 @@
-import requests
+from flask import Flask, jsonify, request
 
-class CarbonAPI: 
+app = Flask(__name__)
+
+class CarbonAPI:
     def __init__(self, url):
-        self.api_url = 'https://api.websitecarbon.com/url/' + url  
+        self.api_url = 'https://api.websitecarbon.com' + url
     
     def get(self):
         try:
-            response = requests.get(self.api_url)
-            response.raise_for_status()  
+            response = request.get(self.api_url)
+            response.raise_for_status()
             data = response.json()
             results = data.get('results')
-            if results:
-                return results
-            else:
-                return None
-        except requests.exceptions.RequestException as e:
+            return results if results else None
+        except request.exceptions.RequestException as e:
             print(f"Request failed: {e}")
             return None
 
-def main():
-    user_url = input("Enter the URL you want to check: ")
-    carbon_instance = CarbonAPI(user_url)
-    results = carbon_instance.get()
-    if results:
-        print(results)
-    else:
-        print("No results found.")
+@app.route('/')
+def index():
+    return "Welcome to the Carbon API"
 
-if __name__ == "__main__":
-    main()
+@app.route('/get_carbon_results', methods=['GET'])
+def get_carbon_results():
+    user_url = request.args.get('url')
+
+    if user_url:
+        carbon_instance = CarbonAPI(user_url)
+        results = carbon_instance.get()
+        if results:
+            return jsonify({"results": results})
+        else:
+            return jsonify({"message": "No results found."}), 404
+    else:
+        return jsonify({"message": "Invalid or missing URL."}), 400
+
+if __name__ == '__main__':
+    app.run(debug=True)
