@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Meal API</title>
-<head>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,22 +12,22 @@
             color: #138bd5;
             text-align: center;
             padding: 40px 20%;
-            text-align: center; 
             border-style: none none solid;
             border-width: 4px;
             border-image: linear-gradient(to right, transparent, #ccc, transparent);
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
             margin-bottom: 140px;
+            font-size: 24px; 
         }
         h2 {
-            border:black;
+            border: black;
             text-align: center;
             margin-bottom: 300px;
         }
         form {
             max-width: 400px;
             margin: 0 auto;
-            margin-bottom: 100px;
+            margin-bottom: 50px;
         }
         label {
             font-weight: bold;
@@ -40,8 +39,6 @@
             margin-top: 8px;
             border-radius: 4px;
             border: 1px solid #ccc;
-            
-            
         }
         input[type="submit"] {
             padding: 10px 20px;
@@ -53,11 +50,23 @@
         input[type="submit"]:hover {
             background-color: #2980b9;
         }
+        
+        .small-header {
+            font-size: 14px;
+            color: #888;
+            text-align: center;
+            margin-top: 20px;
+
+        }
     </style>
 </head>
 <body>
     <h1>Meal API</h1>
-    <form action= "/get_meal_results" method="GET">
+    
+    <p class="small-header">Disclaimer: not all ingredients you input will work</p>
+
+    
+    <form action="/get_meal_results" method="GET">
         <label for="ingredient_input">Enter Ingredient:</label><br>
         <input type="text" id="ingredient_input" name="ingredient" placeholder="Enter the name of the ingredient here"><br><br>
         <input type="submit" value="Submit">
