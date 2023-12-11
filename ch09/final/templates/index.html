@@ -58,6 +58,31 @@
             margin-top: 20px;
 
         }
+        body {
+            position: relative;
+            overflow: hidden; 
+        }
+
+        .snowflake {
+            position: absolute;
+            color: #138bd5;
+            font-size: 25px; 
+            line-height: 1;
+            z-index: 1;
+            pointer-events: none;
+            animation: falling linear infinite;
+            animation-duration: 10s; 
+            animation-timing-function: linear; 
+        }
+
+        @keyframes falling {
+            0% {
+                transform: translateY(-10vh);
+            }
+            100% {
+                transform: translateY(110vh);
+            }
+        }
     </style>
 </head>
 <body>
@@ -72,7 +97,40 @@
         <input type="submit" value="Submit">
     </form>
     <h2>
-        <img src="images/MealAPI.jpg" alt="Meal API Image">
+        <img src="/static/images/MealAPI.jpg" alt="Meal API Image">
     </h2>
+    <script>
+        function createSnowflakes() {
+            const body = document.querySelector('body');
+            const numberOfSnowflakes = 30;
+
+            for (let i = 0; i < numberOfSnowflakes; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.innerHTML = '&#10052;'; 
+                snowflake.classList.add('snowflake');
+
+                const size = Math.random() * 25;
+                snowflake.style.fontSize = `${size}px`;
+
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                snowflake.style.left = `${x}px`;
+                snowflake.style.top = `${y}px`;
+
+                body.appendChild(snowflake);
+
+                
+                snowflake.animate([
+                    { transform: `translateY(${y}px)` },
+                    { transform: `translateY(${window.innerHeight + size}px)` }
+                ], {
+                    duration: Math.random() * 5000 + 5000, 
+                    iterations: Infinity 
+                });
+            }
+        }
+
+        createSnowflakes();
+    </script>
 </body>
 </html>
