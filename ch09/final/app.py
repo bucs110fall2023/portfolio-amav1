@@ -7,6 +7,10 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 def index():
     return render_template('index.html')
 
+@app.route('/list')
+def list():
+    return render_template('list.html', meals= meals_data['meals'])
+
 @app.route('/get_meal_results', methods=['GET'])
 def search_by_ingredient():
     user_ingredient = request.args.get('ingredient')
