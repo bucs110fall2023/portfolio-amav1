@@ -1,7 +1,6 @@
 import requests
 import urllib.parse
 
-
 class MealAPI:
     def __init__(self, api_key):
         self.api_key = api_key
@@ -11,10 +10,15 @@ class MealAPI:
         try:
             encoded_ingredient = urllib.parse.quote_plus(ingredient)
             url = self.base_url + encoded_ingredient
-            response = requests.get(url)  # Removed MealAPI=MealAPI from here
+            response = requests.get(url)
             response.raise_for_status()
             data = response.json()
-            return data.get('meals') if 'meals' in data else None
+            meals = data.get('meals') if 'meals' in data else None
+            if meals:
+                meal_names = [meal['strMeal'] for meal in meals]
+                return meal_names
+            else:
+                return None
         except requests.exceptions.RequestException as e:
             print(f"Request failed: {e}")
             return None
