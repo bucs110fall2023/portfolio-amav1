@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request, render_template
 from MealAPI import MealAPI, validate_ingredient  
 
-app = Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
 @app.route('/')
 def index():
