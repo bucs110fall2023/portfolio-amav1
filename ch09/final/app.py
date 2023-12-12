@@ -31,7 +31,7 @@ def search_by_ingredient():
         }
         
         resp_json = json.dumps(response, sort_keys=True, indent=10)
-        return resp_json
+        return f"{resp_json}<br><a href='/'>Return Home</a>"
     else:
         return jsonify({"message": "No results found for this ingredient."}), 404
 
